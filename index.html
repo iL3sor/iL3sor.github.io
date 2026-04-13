@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>iL3sor — Security Reading List</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0a0d14;
+      --surface: #111520;
+      --surface2: #161b2e;
+      --border: #1e2a45;
+      --accent: #00d4ff;
+      --accent2: #7c3aed;
+      --accent3: #10b981;
+      --text: #e2e8f0;
+      --muted: #64748b;
+      --tag-web: #0ea5e9;
+      --tag-pwn: #f59e0b;
+      --tag-re:  #ec4899;
+      --tag-osint: #10b981;
+      --tag-crypto: #8b5cf6;
+      --tag-malware: #ef4444;
+      --tag-ctf: #f97316;
+      --tag-misc: #6b7280;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+      line-height: 1.6;
+    }
+
+    /* ── Scanlines overlay ── */
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0,0,0,.06) 2px,
+        rgba(0,0,0,.06) 4px
+      );
+      pointer-events: none;
+      z-index: 999;
+    }
+
+    /* ── Header ── */
+    header {
+      border-bottom: 1px solid var(--border);
+      background: linear-gradient(135deg, #0a0d14 0%, #111a2e 100%);
+      position: relative;
+      overflow: hidden;
+    }
+    header::after {
+      content: '';
+      position: absolute;
+      top: -50%; left: -10%;
+      width: 60%; height: 200%;
+      background: radial-gradient(ellipse, rgba(0,212,255,.06) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .header-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 56px 24px 48px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: .72rem;
+      color: var(--accent);
+      border: 1px solid rgba(0,212,255,.3);
+      background: rgba(0,212,255,.06);
+      padding: 4px 10px;
+      border-radius: 4px;
+      margin-bottom: 20px;
+      letter-spacing: .08em;
+    }
+    .badge::before { content: '▶'; font-size: .6rem; }
+
+    .title-row {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      margin-bottom: 14px;
+      flex-wrap: wrap;
+    }
+
+    h1 {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 700;
+      background: linear-gradient(90deg, #fff 30%, var(--accent) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      letter-spacing: -.02em;
+    }
+
+    .cursor {
+      display: inline-block;
+      width: 3px; height: 1em;
+      background: var(--accent);
+      animation: blink 1s step-end infinite;
+      vertical-align: middle;
+      margin-left: 4px;
+      border-radius: 1px;
+    }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+    .subtitle {
+      color: var(--muted);
+      font-size: .95rem;
+      max-width: 540px;
+      margin-bottom: 28px;
+    }
+    .subtitle strong { color: var(--text); }
+
+    .links-row {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .link-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 7px 15px;
+      border-radius: 6px;
+      font-size: .82rem;
+      font-weight: 500;
+      text-decoration: none;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      background: var(--surface);
+      transition: all .2s;
+    }
+    .link-pill:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: rgba(0,212,255,.06);
+    }
+    .link-pill svg { width: 15px; height: 15px; }
+
+    /* ── Stats bar ── */
+    .stats-bar {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+    .stats-inner {
+      border: 1px solid var(--border);
+      border-top: none;
+      background: var(--surface);
+      display: flex;
+      gap: 0;
+      overflow: hidden;
+      border-radius: 0 0 10px 10px;
+    }
+    .stat {
+      flex: 1;
+      padding: 14px 20px;
+      border-right: 1px solid var(--border);
+      text-align: center;
+    }
+    .stat:last-child { border-right: none; }
+    .stat-num {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--accent);
+      display: block;
+    }
+    .stat-label { font-size: .72rem; color: var(--muted); text-transform: uppercase; letter-spacing: .07em; }
+
+    /* ── Main layout ── */
+    main {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 48px 24px 80px;
+    }
+
+    /* ── Filter bar ── */
+    .filter-bar {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 36px;
+      align-items: center;
+    }
+    .filter-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: .72rem;
+      color: var(--muted);
+      margin-right: 4px;
+      letter-spacing: .06em;
+    }
+    .filter-btn {
+      padding: 5px 14px;
+      border-radius: 20px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--muted);
+      font-size: .78rem;
+      cursor: pointer;
+      transition: all .18s;
+      font-family: 'Inter', sans-serif;
+    }
+    .filter-btn:hover { border-color: var(--accent); color: var(--accent); }
+    .filter-btn.active {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #000;
+      font-weight: 600;
+    }
+
+    /* ── Section heading ── */
+    .section-title {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: .75rem;
+      color: var(--muted);
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      margin-bottom: 18px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .section-title::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* ── Cards grid ── */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 16px;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 22px;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      transition: border-color .2s, transform .2s, box-shadow .2s;
+      position: relative;
+      overflow: hidden;
+    }
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      opacity: 0;
+      transition: opacity .2s;
+    }
+    .card:hover {
+      border-color: rgba(0,212,255,.4);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(0,0,0,.4), 0 0 0 1px rgba(0,212,255,.1);
+    }
+    .card:hover::before { opacity: 1; }
+
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .card-tags { display: flex; gap: 6px; flex-wrap: wrap; }
+    .tag {
+      font-size: .65rem;
+      font-weight: 600;
+      letter-spacing: .07em;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      border-radius: 4px;
+    }
+
+    .tag-web     { background: rgba(14,165,233,.15); color: var(--tag-web); }
+    .tag-pwn     { background: rgba(245,158,11,.15); color: var(--tag-pwn); }
+    .tag-re      { background: rgba(236,72,153,.15);  color: var(--tag-re);  }
+    .tag-osint   { background: rgba(16,185,129,.15);  color: var(--tag-osint); }
+    .tag-crypto  { background: rgba(139,92,246,.15);  color: var(--tag-crypto); }
+    .tag-malware { background: rgba(239,68,68,.15);   color: var(--tag-malware); }
+    .tag-ctf     { background: rgba(249,115,22,.15);  color: var(--tag-ctf); }
+    .tag-misc    { background: rgba(107,114,128,.15); color: var(--tag-misc); }
+
+    .card-arrow {
+      color: var(--muted);
+      font-size: 1rem;
+      flex-shrink: 0;
+      transition: color .2s, transform .2s;
+    }
+    .card:hover .card-arrow { color: var(--accent); transform: translate(2px,-2px); }
+
+    .card-title {
+      font-size: .97rem;
+      font-weight: 600;
+      color: var(--text);
+      line-height: 1.4;
+    }
+
+    .card-desc {
+      font-size: .82rem;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+
+    .card-meta {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: .72rem;
+      color: var(--muted);
+      font-family: 'JetBrains Mono', monospace;
+      margin-top: auto;
+      padding-top: 8px;
+      border-top: 1px solid var(--border);
+    }
+    .card-source { color: var(--accent); }
+    .card-dot { opacity: .4; }
+
+    /* ── Featured card ── */
+    .card.featured {
+      border-color: rgba(0,212,255,.25);
+      background: linear-gradient(135deg, var(--surface) 60%, rgba(0,212,255,.04) 100%);
+    }
+    .card.featured::before { opacity: 1; }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 28px 24px;
+      text-align: center;
+    }
+    footer p {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: .72rem;
+      color: var(--muted);
+    }
+    footer a { color: var(--accent); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+
+    /* ── Responsive ── */
+    @media (max-width: 600px) {
+      .stats-inner { flex-direction: column; }
+      .stat { border-right: none; border-bottom: 1px solid var(--border); }
+      .stat:last-child { border-bottom: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ════════ HEADER ════════ -->
+<header>
+  <div class="header-inner">
+    <div class="badge">security · reading list · v1.0</div>
+
+    <div class="title-row">
+      <h1>iL3sor<span class="cursor"></span></h1>
+    </div>
+
+    <p class="subtitle">
+      Kệ sách số của tôi — nơi lưu lại những bài viết về
+      <strong>bảo mật thông tin</strong> mà tôi thấy đáng đọc.
+      Không phải tất cả, chỉ là những thứ để lại dấu ấn.
+    </p>
+
+    <div class="links-row">
+      <a class="link-pill" href="https://github.com/iL3sor" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .3a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2c-3.3.7-4-1.6-4-1.6-.5-1.4-1.3-1.8-1.3-1.8-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1.1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.8-1.6-2.7-.3-5.5-1.3-5.5-5.9 0-1.3.5-2.4 1.2-3.2 0-.4-.5-1.6.2-3.2 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0C17 6.1 18 6.4 18 6.4c.7 1.6.2 2.8.1 3.2.8.8 1.2 1.9 1.2 3.2 0 4.6-2.8 5.6-5.5 5.9.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A12 12 0 0 0 12 .3"/></svg>
+        github.com/iL3sor
+      </a>
+    </div>
+  </div>
+</header>
+
+<!-- ════════ STATS ════════ -->
+<div class="stats-bar">
+  <div class="stats-inner">
+    <div class="stat">
+      <span class="stat-num" id="total-count">15</span>
+      <span class="stat-label">Articles</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">6</span>
+      <span class="stat-label">Topics</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">12</span>
+      <span class="stat-label">Sources</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">2025</span>
+      <span class="stat-label">Since</span>
+    </div>
+  </div>
+</div>
+
+<!-- ════════ MAIN ════════ -->
+<main>
+
+  <!-- Filter bar -->
+  <div class="filter-bar">
+    <span class="filter-label">filter //</span>
+    <button class="filter-btn active" data-filter="all">All</button>
+    <button class="filter-btn" data-filter="web">Web</button>
+    <button class="filter-btn" data-filter="pwn">Pwn</button>
+    <button class="filter-btn" data-filter="re">Reverse</button>
+    <button class="filter-btn" data-filter="osint">OSINT</button>
+    <button class="filter-btn" data-filter="crypto">Crypto</button>
+    <button class="filter-btn" data-filter="malware">Malware</button>
+    <button class="filter-btn" data-filter="ctf">CTF</button>
+  </div>
+
+  <!-- Web Security -->
+  <p class="section-title">// Web Security</p>
+  <div class="cards-grid" id="cards-container">
+
+    <a class="card featured" href="https://portswigger.net/research/http-desync-attacks-request-smuggling-reborn" target="_blank" rel="noopener" data-tags="web">
+      <div class="card-top">
+        <div class="card-tags">
+          <span class="tag tag-web">Web</span>
+        </div>
+        <span class="card-arrow">↗</span>
+      </div>
+      <div class="card-title">HTTP Desync Attacks: Request Smuggling Reborn</div>
+      <div class="card-desc">James Kettle (PortSwigger) phân tích sâu về HTTP Request Smuggling — kỹ thuật khai thác sự bất đồng bộ giữa front-end và back-end proxy.</div>
+      <div class="card-meta">
+        <span class="card-source">portswigger.net</span>
+        <span class="card-dot">·</span>
+        <span>2019 · Must-read</span>
+      </div>
+    </a>
+
+    <a class="card" href="https://portswigger.net/research/server-side-template-injection" target="_blank" rel="noopener" data-tags="web">
+      <div class="card-top">
+        <div class="card-tags"><span class="tag tag-web">Web</span></div>
+        <span class="card-arrow">↗</span>
+      </div>
+      <div class="card-title">Server-Side Template Injection</div>
+      <div class="card-desc">Whitepaper kinh điển về SSTI — cách phát hiện, khai thác và bypass trên các template engine phổ biến: Jinja2, Twig, Freemarker...</div>
+      <div class="card-meta">
+        <span class="card-source">portswigger.net</span>
+        <span class="card-dot">·</span>
+        <span>James Kettle · 2015</span>
+      </div>
+    </a>
+
+    <a class="card" href="https://blog.orange.tw/posts/2018-08-how-i-chained-4-vulnerabilities-on/" target="_blank" rel="noopener" data-tags="web">
+      <div class="card-top">
+        <div class="card-tags"><span class="tag tag-web">Web</span></div>
+        <span class="card-arrow">↗</span>
+      </div>
+      <div class="card-title">How I Chained 4 Bugs to Get RCE on GitLab</div>
+      <div class="card-desc">Orange Tsai chain 4 lỗ hổng khác nhau để đạt RCE trên GitLab. Case study điển hình về tư duy tấn công sáng tạo.</div>
+      <div class="card-meta">
+        <span class="card-source">blog.orange.tw</span>
+        <span class="card-dot">·</span>
+        <span>Orange Tsai · 2018</span>
+      </div>
+    </a>
+
+    <a class="card" href="https://portswigger.net/research/smashing-the-state-machine" target="_blank" rel="noopener" data-tags="web">
+      <div class="card-top">
+        <div class="card-tags"><span class="tag tag-web">Web</span></div>
+        <span class="card-arrow">↗</span>
+      </div>
+      <div class="card-title">Smashing the State Machine: Race Conditions</div>
+      <div class="card-desc">Khám phá race condition trên web — từ single-packet attacks đến việc bypass các cơ chế rate-limiting và anti-CSRF.</div>
+      <div class="card-meta">
+        <span class="card-source">portswigger.net</span>
+        <span class="card-dot">·</span>
+        <span>James Kettle · 2023</span>
+      </div>
+    </a>
+
+  </div>
+
+  <!-- Exploitation / Pwn -->
+  <p class="section-title" style="margin-top:40px">// Binary Exploitation</p>
+  <div class="cards-grid">
+
+    <a class="card" href="https://googleprojectzero.blogspot.com/2019/02/the-curious-case-of-convicting-jumps.html" target="_blank" rel="noopener" data-tags="pwn">
+      <div class="card-top">
+        <div class="card-tags"><span class="tag tag-pwn">Pwn</span></div>
+        <span class="card-arrow">↗</span>
+      </div>
+      <div class="card-title">Project Zero: In-the-Wild iOS Exploit Chain</div>
+      <div class="card-desc">Google Project Zero phân tích toàn bộ exploit chain khai thác iOS in-the-wild — từ initial access đến kernel escalation.</div>
+      <div class="card-meta">
+        <span class="card-source">googleprojectzero.blogspot.com</span>
+        <span class="card-dot">·</span>
+        <span>2019</span>
+      </div>
+    </a>
+
+    <a class="card" href="https://blog.trailofbits.com/2019/10/03/how-is-a-binary-exploited-in-2019/" target="_blank" rel="noopener" data-tags="pwn">
+      <div class="card-top">
+        <div class="card-tags"><span class="tag tag-pwn">Pwn</span></div>
+        <span class="card-arrow">↗</span>
+      </div>
+      <div class="card-title">How is a Binary Exploited in 2019?</div>
+      <div class="card-desc">Trail of Bits tổng quan về các kỹ thuật modern binary exploitation — ASLR/PIE bypass, ROP chains, heap grooming sau khi các mitigation cũ đã lỗi thời.</div>
+      <div class="card-meta">
+        <span class="card-source">blog.trailofbits.com</span>
+        <span class="card-dot">·</span>
+        <span>Trail of Bits · 2019</span>
+      </div>
+    </a>
+
+  </div>
+
+  <!-- Reverse Engineering -->
+  <p class="section-title" style="margin-top:40px">// Reverse Engineering & Malware</p>
+  <div class="cards-grid">
+
+    <a class="card" href="https://www.mandiant.com/resources/blog/apt41-us-government-targets" target="_blank" rel="noopener" data-tags="malware re">
+      <div class="card-top">
+        <div class="card-tags">
+          <span class="tag tag-malware">Malware</span>
+          <span class="tag tag-re">RE</span>
+        </div>
+        <span class="card-arrow">↗</span>
+      </div>
+      <div class="card-title">APT41: A Dual Espionage and Cyber Crime Operation</div>
+      <div class="card-desc">Mandiant phân tích nhóm APT41 — vừa thực hiện tấn công espionage nhà nước vừa tham gia tội phạm mạng có lợi nhuận.</div>
+      <div class="card-meta">
+        <span class="card-source">mandiant.com</span>
+        <span class="card-dot">·</span>
+        <span>Mandiant · 2020</span>
+      </div>
+    </a>
+
+    <a class="card" href="https://research.checkpoint.com/2023/the-rhysida-ransomware-activity-analysis-and-the-decryption-of-encrypted-files/" target="_blank" rel="noopener" data-tags="malware re">
+      <div class="card-top">
+        <div class="card-tags">
+          <span class="tag tag-malware">Malware</span>
+          <span class="tag tag-re">RE</span>
+        </div>
+        <span class="card-arrow">↗</span>
+      </div>
+      <div class="card-title">Rhysida Ransomware: Activity Analysis & Decryption</div>
+      <div class="card-desc">Check Point Research phân tích và tìm ra lỗ hổng trong cài đặt mã hóa của Rhysida ransomware — cho phép khôi phục file bị mã hóa.</div>
+      <div class="card-meta">
+        <span class="card-source">research.checkpoint.com</span>
+        <span class="card-dot">·</span>
+        <span>Check Point · 2023</span>
+      </div>
+    </a>
+
+    <a class="card" href="https://liveoverflow.com/binary-hacking/" target="_blank" rel="noopener" data-tags="re pwn">
+      <div class="card-top">
+        <div class="card-tags">
+          <span class="tag tag-re">RE</span>
+          <span class="tag tag-pwn">Pwn</span>
+        </div>
+        <span class="card-arrow">↗</span>
+      </div>
+      <div class="card-title">LiveOverflow — Binary Hacking Series</div>
+      <div class="card-desc">Series bài học từ cơ bản đến nâng cao về binary hacking — cực kỳ phù hợp cho người mới bắt đầu học pwn và RE.</div>
+      <div class="card-meta">
+        <span class="card-source">liveoverflow.com</span>
+        <span class="card-dot">·</span>
+        <span>LiveOverflow</span>
+      </div>
+    </a>
+
+  </div>
+
+  <!-- OSINT -->
+  <p class="section-title" style="margin-top:40px">// OSINT & Threat Intelligence</p>
+  <div class="cards-grid">
+
+    <a class="card" href="https://krebsonsecurity.com/2020/07/whos-behind-wednesdays-twitter-hack/" target="_blank" rel="noopener" data-tags="osint">
+      <div class="card-top">
+        <div class="card-tags"><span class="tag tag-osint">OSINT</span></div>
+        <span class="card-arrow">↗</span>
+      </div>
+      <div class="card-title">Who's Behind the 2020 Twitter Hack?</div>
+      <div class="card-desc">Brian Krebs điều tra OSINT để xác định nhóm đứng sau vụ hack Twitter 2020 — ví dụ thực chiến về cách truy vết tin tặc qua dấu vết số.</div>
+      <div class="card-meta">
+        <span class="card-source">krebsonsecurity.com</span>
+        <span class="card-dot">·</span>
+        <span>Brian Krebs · 2020</span>
+      </div>
+    </a>
+
+    <a class="card" href="https://github.com/jivoi/awesome-osint" target="_blank" rel="noopener" data-tags="osint">
+      <div class="card-top">
+        <div class="card-tags"><span class="tag tag-osint">OSINT</span></div>
+        <span class="card-arrow">↗</span>
+      </div>
+      <div class="card-title">Awesome OSINT — Curated Resource List</div>
+      <div class="card-desc">Danh sách tổng hợp hàng trăm công cụ và tài nguyên OSINT — từ social media intelligence đến geolocation và darkweb monitoring.</div>
+      <div class="card-meta">
+        <span class="card-source">github.com</span>
+        <span class="card-dot">·</span>
+        <span>Community maintained</span>
+      </div>
+    </a>
+
+  </div>
+
+  <!-- Crypto -->
+  <p class="section-title" style="margin-top:40px">// Cryptography & Protocol Analysis</p>
+  <div class="cards-grid">
+
+    <a class="card" href="https://cryptopals.com/" target="_blank" rel="noopener" data-tags="crypto">
+      <div class="card-top">
+        <div class="card-tags"><span class="tag tag-crypto">Crypto</span></div>
+        <span class="card-arrow">↗</span>
+      </div>
+      <div class="card-title">The Cryptopals Crypto Challenges</div>
+      <div class="card-desc">Bộ 48 bài thực hành về tấn công mật mã học — từ fixed-nonce CTR đến padding oracle attack. Học crypto bằng cách break nó.</div>
+      <div class="card-meta">
+        <span class="card-source">cryptopals.com</span>
+        <span class="card-dot">·</span>
+        <span>Matasano · Essential</span>
+      </div>
+    </a>
+
+    <a class="card" href="https://blog.trailofbits.com/2019/08/06/better-than-you-should-know-nonce-misuse-resistance/" target="_blank" rel="noopener" data-tags="crypto">
+      <div class="card-top">
+        <div class="card-tags"><span class="tag tag-crypto">Crypto</span></div>
+        <span class="card-arrow">↗</span>
+      </div>
+      <div class="card-title">Nonce-Misuse Resistance: AEAD Pitfalls</div>
+      <div class="card-desc">Trail of Bits phân tích các cạm bẫy khi implement AEAD — tại sao nonce reuse trong AES-GCM là thảm họa và cách chọn cipher phù hợp.</div>
+      <div class="card-meta">
+        <span class="card-source">blog.trailofbits.com</span>
+        <span class="card-dot">·</span>
+        <span>Trail of Bits · 2019</span>
+      </div>
+    </a>
+
+  </div>
+
+  <!-- CTF / Labs -->
+  <p class="section-title" style="margin-top:40px">// CTF & Practice Labs</p>
+  <div class="cards-grid">
+
+    <a class="card" href="https://ctftime.org/" target="_blank" rel="noopener" data-tags="ctf">
+      <div class="card-top">
+        <div class="card-tags"><span class="tag tag-ctf">CTF</span></div>
+        <span class="card-arrow">↗</span>
+      </div>
+      <div class="card-title">CTFtime — All CTF Events & Writeups</div>
+      <div class="card-desc">Tổng hợp tất cả CTF diễn ra trên thế giới, bảng xếp hạng team và writeup từ các cuộc thi — tài nguyên không thể thiếu.</div>
+      <div class="card-meta">
+        <span class="card-source">ctftime.org</span>
+        <span class="card-dot">·</span>
+        <span>Community</span>
+      </div>
+    </a>
+
+    <a class="card" href="https://book.hacktricks.xyz/" target="_blank" rel="noopener" data-tags="web pwn ctf">
+      <div class="card-top">
+        <div class="card-tags">
+          <span class="tag tag-ctf">CTF</span>
+          <span class="tag tag-web">Web</span>
+        </div>
+        <span class="card-arrow">↗</span>
+      </div>
+      <div class="card-title">HackTricks — Pentesting Bible</div>
+      <div class="card-desc">Cuốn sách kỹ thuật pentesting online đồ sộ nhất — từ recon, web attacks đến AD exploitation và cloud security.</div>
+      <div class="card-meta">
+        <span class="card-source">book.hacktricks.xyz</span>
+        <span class="card-dot">·</span>
+        <span>Carlos Polop</span>
+      </div>
+    </a>
+
+  </div>
+
+</main>
+
+<!-- ════════ FOOTER ════════ -->
+<footer>
+  <p>
+    built by <a href="https://github.com/iL3sor">iL3sor</a>
+    &nbsp;·&nbsp;
+    <span style="font-family:monospace">// rm -rf ignorance</span>
+  </p>
+</footer>
+
+<!-- ════════ FILTER SCRIPT ════════ -->
+<script>
+  const buttons = document.querySelectorAll('.filter-btn');
+  const cards   = document.querySelectorAll('.card');
+
+  buttons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      buttons.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      const filter = btn.dataset.filter;
+      cards.forEach(card => {
+        const tags = card.dataset.tags || '';
+        if (filter === 'all' || tags.includes(filter)) {
+          card.style.display = '';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    });
+  });
+</script>
+
+</body>
+</html>

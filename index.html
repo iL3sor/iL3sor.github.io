@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>iL3sor — Security Reading List</title>
-  <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <style>
@@ -12,7 +12,7 @@
       --bg: #0a0d14;
       --surface: #111520;
       --surface2: #161b2e;
-      --border: #1e2a45;
+      --border: #122145;
       --accent: #00d4ff;
       --accent2: #7c3aed;
       --accent3: #10b981;
@@ -78,6 +78,14 @@
       z-index: 1;
     }
 
+    .badge-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
     .badge {
       display: inline-flex;
       align-items: center;
@@ -89,10 +97,10 @@
       background: rgba(0,212,255,.06);
       padding: 4px 10px;
       border-radius: 4px;
-      margin-bottom: 20px;
       letter-spacing: .08em;
     }
     .badge::before { content: '▶'; font-size: .6rem; }
+    .hit-counter { height: 22px; border-radius: 4px; display: block; }
 
     .title-row {
       display: flex;
@@ -382,7 +390,10 @@
 <!-- ════════ HEADER ════════ -->
 <header>
   <div class="header-inner">
-    <div class="badge">security · reading list · v1.0</div>
+    <div class="badge-row">
+      <div class="badge">security · reading list · v1.0</div>
+      <img class="hit-counter" src="https://hitscounter.dev/api/hit?url=https%3A%2F%2Fil3sor.github.io%2F&label=Visitor&icon=heart-fill&color=%230d6efd&message=&style=flat&tz=UTC" alt="visitor count" />
+    </div>
 
     <div class="title-row">
       <h1>iL3sor<span class="cursor"></span></h1>

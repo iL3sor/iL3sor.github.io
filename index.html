@@ -27,6 +27,8 @@
       --tag-ctf: #f97316;
       --tag-misc: #6b7280;
       --tag-microvm: #22d3ee;
+      --tag-cloud: #39ff14;
+      --tag-k8s: #ff2a2a;
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -320,6 +322,8 @@
     .tag-ctf     { background: rgba(249,115,22,.15);  color: var(--tag-ctf); }
     .tag-misc    { background: rgba(107,114,128,.15); color: var(--tag-misc); }
     .tag-microvm { background: rgba(34,211,238,.12);  color: var(--tag-microvm); }
+    .tag-cloud   { background: rgba(57,255,20,.15);  color: var(--tag-cloud); }
+    .tag-k8s     { background: rgba(255,42,42,.15);  color: var(--tag-k8s); }
 
     .card-arrow {
       color: var(--muted);
@@ -350,11 +354,19 @@
       color: var(--muted);
       font-family: 'JetBrains Mono', monospace;
       margin-top: auto;
-      padding-top: 8px;
+      padding-top: 12px;
       border-top: 1px solid var(--border);
     }
+    .card-meta span {
+      white-space: nowrap;
+    }
+    .card-meta span:last-child {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      min-width: 0;
+    }
     .card-source { color: var(--accent); }
-    .card-dot { opacity: .4; }
+    .card-dot { opacity: .4; flex-shrink: 0; }
 
     /* ── Featured card ── */
     .card.featured {
@@ -421,15 +433,15 @@
 <div class="stats-bar">
   <div class="stats-inner">
     <div class="stat">
-      <span class="stat-num" id="total-count">1</span>
+      <span class="stat-num" id="total-count">2</span>
       <span class="stat-label">Articles</span>
     </div>
     <div class="stat">
-      <span class="stat-num">1</span>
+      <span class="stat-num">2</span>
       <span class="stat-label">Topics</span>
     </div>
     <div class="stat">
-      <span class="stat-num">1</span>
+      <span class="stat-num">2</span>
       <span class="stat-label">Sources</span>
     </div>
     <div class="stat">
@@ -447,6 +459,8 @@
     <span class="filter-label">filter //</span>
     <button class="filter-btn active" data-filter="all">All</button>
     <button class="filter-btn" data-filter="microvm">microVM</button>
+    <button class="filter-btn" data-filter="cloud">Cloud</button>
+    <button class="filter-btn" data-filter="k8s">K8s</button>
     <button class="filter-btn" data-filter="web">Web</button>
     <button class="filter-btn" data-filter="pwn">Pwn</button>
     <button class="filter-btn" data-filter="re">Reverse</button>
@@ -455,9 +469,25 @@
     <button class="filter-btn" data-filter="malware">Malware</button>
   </div>
 
-  <!-- Virtualization & Isolation -->
-  <p class="section-title">// Virtualization & Isolation</p>
+  <!-- Reading List -->
   <div class="cards-grid">
+
+    <a class="card featured" href="https://blog.calif.io/p/privilege-escalation-in-eks" target="_blank" rel="noopener" data-tags="cloud k8s">
+      <div class="card-top">
+        <div class="card-tags">
+          <span class="tag tag-cloud">Cloud</span>
+          <span class="tag tag-k8s">K8s</span>
+        </div>
+        <span class="card-arrow">↗</span>
+      </div>
+      <div class="card-title">Privilege escalation in AWS Elastic Kubernetes Service (EKS)</div>
+      <div class="card-desc">The team recently encountered an interesting scenario where we were trying to escalate privileges from a compromised pod in AWS Elastic Kubernetes Service (EKS) and struggled with NodeRestriction, a security mechanism enabled by default on all EKS versions.</div>
+      <div class="card-meta">
+        <span class="card-source">blog.calif.io</span>
+        <span class="card-dot">·</span>
+        <span>Calif Team</span>
+      </div>
+    </a>
 
     <a class="card featured" href="https://emirb.github.io/blog/microvm-2026/" target="_blank" rel="noopener" data-tags="microvm">
       <div class="card-top">

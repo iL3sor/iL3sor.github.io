@@ -29,6 +29,7 @@
       --tag-microvm: #22d3ee;
       --tag-cloud: #39ff14;
       --tag-k8s: #ff2a2a;
+      --tag-ainative: #14b8a6;
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -324,6 +325,7 @@
     .tag-microvm { background: rgba(34,211,238,.12);  color: var(--tag-microvm); }
     .tag-cloud   { background: rgba(57,255,20,.15);  color: var(--tag-cloud); }
     .tag-k8s     { background: rgba(255,42,42,.15);  color: var(--tag-k8s); }
+    .tag-ainative { background: rgba(20,184,166,.15); color: var(--tag-ainative); }
 
     .card-arrow {
       color: var(--muted);
@@ -433,15 +435,15 @@
 <div class="stats-bar">
   <div class="stats-inner">
     <div class="stat">
-      <span class="stat-num" id="total-count">2</span>
+      <span class="stat-num" id="total-count">3</span>
       <span class="stat-label">Articles</span>
     </div>
     <div class="stat">
-      <span class="stat-num">2</span>
+      <span class="stat-num">3</span>
       <span class="stat-label">Topics</span>
     </div>
     <div class="stat">
-      <span class="stat-num">2</span>
+      <span class="stat-num">3</span>
       <span class="stat-label">Sources</span>
     </div>
     <div class="stat">
@@ -467,10 +469,27 @@
     <button class="filter-btn" data-filter="osint">OSINT</button>
     <button class="filter-btn" data-filter="crypto">Crypto</button>
     <button class="filter-btn" data-filter="malware">Malware</button>
+    <button class="filter-btn" data-filter="ainative">AI Native</button>
   </div>
 
   <!-- Reading List -->
   <div class="cards-grid">
+
+    <a class="card featured" href="https://www.forbes.com/councils/forbestechcouncil/2026/03/26/how-ai-native-is-more-than-just-a-buzzword/" target="_blank" rel="noopener" data-tags="ainative">
+      <div class="card-top">
+        <div class="card-tags">
+          <span class="tag tag-ainative">AI Native</span>
+        </div>
+        <span class="card-arrow">↗</span>
+      </div>
+      <div class="card-title">How 'AI-Native' Is More Than Just A Buzzword</div>
+      <div class="card-desc">The cybersecurity industry often turns technical concepts into buzzwords until they lose their original meaning. This article explores the rise of the "AI-native" label—now used by nearly every startup—and examines what it truly means for people, processes, and technology to be AI-native.</div>
+      <div class="card-meta">
+        <span class="card-source">forbes.com</span>
+        <span class="card-dot">·</span>
+        <span>Claude Mandy · Mar 26, 2026</span>
+      </div>
+    </a>
 
     <a class="card featured" href="https://blog.calif.io/p/privilege-escalation-in-eks" target="_blank" rel="noopener" data-tags="cloud k8s">
       <div class="card-top">

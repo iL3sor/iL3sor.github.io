@@ -19,7 +19,7 @@
       --text: #e2e8f0;
       --muted: #64748b;
       --tag-web: #0ea5e9;
-      --tag-pwn: #f59e0b;
+      --tag-pentest: #f59e0b;
       --tag-re:  #ec4899;
       --tag-osint: #10b981;
       --tag-crypto: #8b5cf6;
@@ -316,7 +316,7 @@
     }
 
     .tag-web     { background: rgba(14,165,233,.15); color: var(--tag-web); }
-    .tag-pwn     { background: rgba(245,158,11,.15); color: var(--tag-pwn); }
+    .tag-pentest { background: rgba(245,158,11,.15); color: var(--tag-pentest); }
     .tag-re      { background: rgba(236,72,153,.15);  color: var(--tag-re);  }
     .tag-osint   { background: rgba(16,185,129,.15);  color: var(--tag-osint); }
     .tag-crypto  { background: rgba(139,92,246,.15);  color: var(--tag-crypto); }
@@ -437,15 +437,15 @@
 <div class="stats-bar">
   <div class="stats-inner">
     <div class="stat">
-      <span class="stat-num" id="total-count">6</span>
+      <span class="stat-num" id="total-count">9</span>
       <span class="stat-label">Articles</span>
     </div>
     <div class="stat">
-      <span class="stat-num">5</span>
+      <span class="stat-num">6</span>
       <span class="stat-label">Topics</span>
     </div>
     <div class="stat">
-      <span class="stat-num">6</span>
+      <span class="stat-num">8</span>
       <span class="stat-label">Sources</span>
     </div>
     <div class="stat">
@@ -466,7 +466,7 @@
     <button class="filter-btn" data-filter="cloud">Cloud</button>
     <button class="filter-btn" data-filter="k8s">K8s</button>
     <button class="filter-btn" data-filter="web">Web</button>
-    <button class="filter-btn" data-filter="pwn">Pwn</button>
+    <button class="filter-btn" data-filter="pentest">Pentest</button>
     <button class="filter-btn" data-filter="re">Reverse</button>
     <button class="filter-btn" data-filter="osint">OSINT</button>
     <button class="filter-btn" data-filter="crypto">Crypto</button>
@@ -478,6 +478,55 @@
 
   <!-- Reading List -->
   <div class="cards-grid">
+
+    <a class="card featured" href="https://arxiv.org/pdf/2512.09882" target="_blank" rel="noopener" data-tags="pentest ainative">
+      <div class="card-top">
+        <div class="card-tags">
+          <span class="tag tag-pentest">Pentest</span>
+          <span class="tag tag-ainative">AI Native</span>
+        </div>
+        <span class="card-arrow">↗</span>
+      </div>
+      <div class="card-title">Comparing AI Agents to Cybersecurity Professionals in Real-World Penetration Testing</div>
+      <div class="card-desc">A study pitting AI agents against human experts in live enterprise pentesting. The ARTEMIS multi-agent framework — with dynamic prompting and automated vulnerability assessment — was tested on a ~8,000-host university network across 12 subnets. It ranked second overall, found nine real vulnerabilities at 82% accuracy, beat nine of ten human participants, and ran at $18/hr versus $60/hr for professionals.</div>
+      <div class="card-meta">
+        <span class="card-source">arxiv.org</span>
+        <span class="card-dot">·</span>
+        <span>Justin W. Lin et al. · Dec 10, 2025 · PDF</span>
+      </div>
+    </a>
+
+    <a class="card featured" href="https://kypvas.github.io/ad_attack_architecture/" target="_blank" rel="noopener" data-tags="pentest">
+      <div class="card-top">
+        <div class="card-tags">
+          <span class="tag tag-pentest">Pentest</span>
+        </div>
+        <span class="card-arrow">↗</span>
+      </div>
+      <div class="card-title">Active Directory — Attack Architecture Map</div>
+      <div class="card-desc">A complete map of the Active Directory attack surface, from recon to domain dominance. Walks through credential access, privilege escalation, lateral movement, and persistence — covering Kerberoasting, AS-REP roasting, delegation abuse (RBCD/constrained), ACL attacks, ADCS ESC1-16, GPO abuse, golden tickets, DCShadow, and hybrid Azure AD attack paths, alongside detection event IDs and OPSEC considerations.</div>
+      <div class="card-meta">
+        <span class="card-source">kypvas.github.io</span>
+        <span class="card-dot">·</span>
+        <span>AD Attack Map · v1.1</span>
+      </div>
+    </a>
+
+    <a class="card featured" href="https://kypvas.github.io/red-team-map/" target="_blank" rel="noopener" data-tags="pentest">
+      <div class="card-top">
+        <div class="card-tags">
+          <span class="tag tag-pentest">Pentest</span>
+        </div>
+        <span class="card-arrow">↗</span>
+      </div>
+      <div class="card-title">Red Team Operations Architecture Map</div>
+      <div class="card-desc">A comprehensive reference map of the full red team kill chain — from infrastructure setup through post-exploitation. Covers seven phases: infrastructure management, initial access, payload execution, defense evasion, lateral movement, credential harvesting, and exfiltration, with C2 framework choices (Cobalt Strike, Havoc, Sliver, Mythic), phishing infra, and EDR-bypass tradecraft for the likes of CrowdStrike and Cortex XDR.</div>
+      <div class="card-meta">
+        <span class="card-source">kypvas.github.io</span>
+        <span class="card-dot">·</span>
+        <span>Red Team Map · v1.1</span>
+      </div>
+    </a>
 
     <a class="card featured" href="https://cdn.penguin.co.uk/dam-assets/books/9780141033570/9780141033570-sample.pdf" target="_blank" rel="noopener" data-tags="misc">
       <div class="card-top">

@@ -31,6 +31,7 @@
       --tag-k8s: #ff2a2a;
       --tag-ainative: #14b8a6;
       --tag-startup: #fbbf24;
+      --tag-politics: #6366f1;
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -328,6 +329,7 @@
     .tag-k8s     { background: rgba(255,42,42,.15);  color: var(--tag-k8s); }
     .tag-ainative { background: rgba(20,184,166,.15); color: var(--tag-ainative); }
     .tag-startup { background: rgba(251,191,36,.15); color: var(--tag-startup); }
+    .tag-politics { background: rgba(99,102,241,.15); color: var(--tag-politics); }
 
     .card-arrow {
       color: var(--muted);
@@ -437,15 +439,15 @@
 <div class="stats-bar">
   <div class="stats-inner">
     <div class="stat">
-      <span class="stat-num" id="total-count">9</span>
+      <span class="stat-num" id="total-count">10</span>
       <span class="stat-label">Articles</span>
     </div>
     <div class="stat">
-      <span class="stat-num">6</span>
+      <span class="stat-num">7</span>
       <span class="stat-label">Topics</span>
     </div>
     <div class="stat">
-      <span class="stat-num">8</span>
+      <span class="stat-num">9</span>
       <span class="stat-label">Sources</span>
     </div>
     <div class="stat">
@@ -473,6 +475,7 @@
     <button class="filter-btn" data-filter="malware">Malware</button>
     <button class="filter-btn" data-filter="ainative">AI Native</button>
     <button class="filter-btn" data-filter="startup">Startup</button>
+    <button class="filter-btn" data-filter="politics">Politics</button>
     <button class="filter-btn" data-filter="misc">Misc</button>
   </div>
 
@@ -541,6 +544,22 @@
         <span class="card-source">penguin.co.uk</span>
         <span class="card-dot">·</span>
         <span>Daniel Kahneman · PDF</span>
+      </div>
+    </a>
+
+    <a class="card featured" href="https://github.com/iamswain25/political-life/raw/master/rawtexts/political-life.pdf" target="_blank" rel="noopener" data-tags="politics">
+      <div class="card-top">
+        <div class="card-tags">
+          <span class="tag tag-politics">Politics</span>
+        </div>
+        <span class="card-arrow">↗</span>
+      </div>
+      <div class="card-title">Political Life</div>
+      <div class="card-desc">A collection of essays by Wang Huning, one of China's most influential political theorists and the intellectual architect behind the ideology of successive Chinese leaderships. A window into the thinking on governance, culture, and the modern state that has shaped contemporary Chinese politics.</div>
+      <div class="card-meta">
+        <span class="card-source">github.com</span>
+        <span class="card-dot">·</span>
+        <span>Wang Huning · PDF</span>
       </div>
     </a>
 
